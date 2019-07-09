@@ -39,8 +39,7 @@
 {
     if (self.timerOwner)
     {
-        typeof(self) __weak weakSelf = self;
-        self.timerBlock(weakSelf);
+        self.timerBlock(self);
     }
     else
     {
