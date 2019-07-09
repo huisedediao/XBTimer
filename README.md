@@ -4,12 +4,14 @@
 ### 使用：
 <br>
 <pre>
-    [XBTimer timerStartWithTimeInterval:1 owner:self repeats:YES delay:NO block:^(XBTimer *timer) {
-        if (_count == 4)
-        {
-            [timer stop];
-        }
-        NSLog(@"runTimerOnMainRunLoop");
-        _count++;
-    }];
+__weak TestViewController *weakSelf = self;
+[XBTimer timerStartWithTimeInterval:1 owner:self repeats:YES onMainThread:YES delay:NO block:^(XBTimer *timer) {
+    __strong TestViewController *strongSelf = weakSelf;
+    if (strongSelf->_count == 4)
+    {
+        [timer stop];
+    }
+    NSLog(@"runTimerOnMainRunLoop");
+    strongSelf->_count++;
+}];
 </pre>
