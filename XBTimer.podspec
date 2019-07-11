@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "XBTimer"
-  spec.version      = "0.0.4"
+  spec.version      = "0.0.5"
   spec.summary      = "会自动销毁的定时器，如果owner销毁了，或者timer调用stop并且没有强指针引用timer时，timer会自动销毁"
 
   # This description is used to generate tags and improve search results.
