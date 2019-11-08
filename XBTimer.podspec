@@ -16,8 +16,8 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "XBTimer"
-  spec.version      = "0.0.5"
-  spec.summary      = "会自动销毁的定时器，如果owner销毁了，或者timer调用stop并且没有强指针引用timer时，timer会自动销毁"
+  spec.version      = "0.0.6"
+  spec.summary      = "基于GCD的定时器，比NSTimer更加精准。如果owner销毁了，timer会自动停止并销毁"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -25,9 +25,9 @@ Pod::Spec.new do |spec|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   spec.description  = <<-DESC
-                          会自动销毁的定时器，如果owner销毁了，或者timer调用stop并且没有强指针引用timer时，timer会自动销毁
+                          基于GCD的定时器，比NSTimer更加精准。如果owner销毁了，timer会自动停止并销毁
                       DESC
-  # spec.description  = "便于同时展示图片和文字的情景，支持图片在左、图片在右、图片在上、图片在下模式，支持内容（图片和文字）居中、上、下、左、右对齐，支持设置内容到对齐边的间距，支持设置图文间距"
+  # spec.description  = "基于GCD的定时器，比NSTimer更加精准。如果owner销毁了，timer会自动停止并销毁"
 
   spec.homepage     = "https://github.com/huisedediao/XBTimer"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
