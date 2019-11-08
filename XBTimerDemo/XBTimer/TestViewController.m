@@ -12,7 +12,7 @@
 @interface TestViewController ()
 {
     NSInteger _count;
-    XBTimer *_timer;
+    NSString *_taskID;
 }
 @end
 
@@ -31,42 +31,31 @@
     [button setTitle:@"back" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     
-    [self runTimerOnMainRunLoop];
+//    __weak typeof(self) weakself = self;
+//    [XBTimer executeWithOwner:self delay:0 interval:2 repeats:YES onMainQueue:YES resultTask:^BOOL{
+//        __strong typeof(weakself) strongself = weakself;
+//        strongself->_count ++;
+//        if (strongself ->_count > 5) {
+//            return YES;
+//        }
+//        NSLog(@"%ld",strongself->_count);
+//        return NO;
+//    }];
     
-//    [self timerDeallocTest];
+    _taskID = [XBTimer executeWithTarget:self task:@selector(timerTest) delay:0 interval:1 repeats:YES onMainQueue:YES];
 }
 
-- (void)runTimerOnMainRunLoop
-{
-    __weak TestViewController *weakSelf = self;
-    [XBTimer timerStartWithTimeInterval:1 owner:self repeats:YES onMainThread:YES delay:NO block:^(XBTimer *timer) {
-        __strong TestViewController *strongSelf = weakSelf;
-        if (strongSelf->_count == 4)
-        {
-            [timer stop];
-        }
-        NSLog(@"runTimerOnMainRunLoop");
-        strongSelf->_count++;
-    }];
-}
 
-- (void)timerDeallocTest
+- (void)timerTest
 {
-    __weak TestViewController *weakSelf = self;
-    _timer = [[XBTimer alloc] initWithTimeInterval:1 owner:self repeats:YES block:^(XBTimer *timer) {
-        __strong TestViewController *strongSelf = weakSelf;
-        if (strongSelf->_count == 4)
-        {
-            [timer stop];
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [timer startOnMainThread:YES delay:NO];
-            });
-        }
-        NSLog(@"runTimerOnMainRunLoop");
-        strongSelf->_count++;
-    }];
-    [_timer startOnMainThread:YES delay:YES];
+    _count ++;
+    if (_count > 5) {
+        [XBTimer cancelTask:_taskID];
+    }else
+    {
+        NSLog(@"%s,count:%ld",__func__,_count);
+    }
+    
 }
 
 - (void)dealloc

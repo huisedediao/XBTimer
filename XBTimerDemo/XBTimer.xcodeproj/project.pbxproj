@@ -87,8 +87,8 @@
 		F144F01222D473BE000B93FA /* XBTimer */ = {
 			isa = PBXGroup;
 			children = (
-				F144F01322D473BE000B93FA /* XBTimer.m */,
 				F144F01422D473BE000B93FA /* XBTimer.h */,
+				F144F01322D473BE000B93FA /* XBTimer.m */,
 			);
 			name = XBTimer;
 			path = ../../XBTimer;

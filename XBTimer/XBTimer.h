@@ -1,38 +1,56 @@
 //
 //  XBTimer.h
-//  XBTimer
+//  Interview01-打印
 //
-//  Created by xxb on 2018/8/24.
-//  Copyright © 2018年 xxb. All rights reserved.
+//  Created by xxb on 2019/11/8.
+//  Copyright © 2019 MJ Lee. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@class XBTimer;
+NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^XBTimerBlock)(XBTimer *timer);
+typedef BOOL (^XBTimerResultTask)(void);
 
 @interface XBTimer : NSObject
 
-///注意：如果block里引用其他对象的资源时要用弱引用
-+ (void)timerStartWithTimeInterval:(NSTimeInterval)ti owner:(id)owner repeats:(BOOL)yesOrNo onMainThread:(BOOL)onMainThread delay:(BOOL)delay block:(XBTimerBlock)block;
+/**
+ 返回一个任务标识 taskID
+ owner：owner为nil时会自动停止定时器
+ delay：延时多久开始执行任务
+ interval：重复的间隔时间
+ repeats：是否重复
+ onMainQueue：是否在主队列中执行
+ resultTask：需要执行的任务，task返回YES表示取消当前定时器
+ */
++ (NSString *)executeWithOwner:(__weak id)owner
+                         delay:(NSTimeInterval)delay
+                      interval:(NSTimeInterval)interval
+                       repeats:(BOOL)repeats
+                   onMainQueue:(BOOL)onMainQueue
+                taskWithResult:(__nullable XBTimerResultTask)taskWithResult;
 
 /**
- ti : 执行间隔
- owner : timer的拥有者
- repeats : 是否重复执行
- block : 回调，注意：如果block里引用其他对象的资源时要用弱引用
+ 返回一个任务标识 taskID
+ target：
+ selector：
+ delay：延时多久开始执行任务
+ interval：重复的间隔时间
+ repeats：是否重复
+ onMainQueue：是否在主队列中执行
  */
-- (instancetype)initWithTimeInterval:(NSTimeInterval)ti owner:(id)owner repeats:(BOOL)yesOrNo block:(XBTimerBlock)block;
++ (NSString *)executeWithTarget:(__weak id)target
+                           task:(SEL)task
+                          delay:(NSTimeInterval)delay
+                       interval:(NSTimeInterval)interval
+                        repeats:(BOOL)repeats
+                    onMainQueue:(BOOL)onMainQueue;
 
-/** 定时器开始工作
- onMainThread : 是否运行在主线程,
-                注意：如果不是运行在自己创建的线程，在销毁该线程之前，要调用timer的stop方法，否则timer就变成了野指针
- delay : YES,则ti秒后才执行第一次回调；NO，立即执行第一次回调
+/**
+ 根据传入的标识停止任务
  */
-- (void)startOnMainThread:(BOOL)onMainThread delay:(BOOL)delay;
-
-/** 立即停止定时器 */
-- (void)stop;
++ (void)cancelTask:(NSString *)taskID;
 
 @end
+
+NS_ASSUME_NONNULL_END
