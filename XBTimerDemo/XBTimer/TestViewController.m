@@ -12,7 +12,7 @@
 @interface TestViewController ()
 {
     NSInteger _count;
-    NSString *_taskID;
+    dispatch_source_t _timer;
 }
 @end
 
@@ -31,18 +31,7 @@
     [button setTitle:@"back" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     
-//    __weak typeof(self) weakself = self;
-//    [XBTimer executeWithOwner:self delay:0 interval:2 repeats:YES onMainQueue:YES resultTask:^BOOL{
-//        __strong typeof(weakself) strongself = weakself;
-//        strongself->_count ++;
-//        if (strongself ->_count > 5) {
-//            return YES;
-//        }
-//        NSLog(@"%ld",strongself->_count);
-//        return NO;
-//    }];
-    
-    _taskID = [XBTimer executeWithTarget:self task:@selector(timerTest) delay:0 interval:1 repeats:YES onMainQueue:YES];
+    _timer = [XBTimer executeWithTarget:self task:@selector(timerTest) delay:0 interval:1 repeats:YES onMainQueue:YES];
 }
 
 
@@ -50,7 +39,7 @@
 {
     _count ++;
     if (_count > 5) {
-        [XBTimer cancelTask:_taskID];
+        [XBTimer cancelTimer:_timer];
     }else
     {
         NSLog(@"%s,count:%ld",__func__,_count);
